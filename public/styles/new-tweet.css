@@ -1,0 +1,36 @@
+.new-tweet {
+    width: 100%;
+    /*color: #FFFFFF;
+    padding-left: 1.5em;
+    padding-right: 1.5em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    z-index: 1; */
+}
+
+.new-tweet form {
+    width: 100%;
+}
+
+.new-tweet textarea {
+    background-color: transparent;
+    border-top: transparent;
+    border-left: transparent;
+    border-right: transparent;
+    border-bottom: black;
+    border-bottom-width: 5px;
+}
+
+#tweet-text {
+    width: 100%;
+}
+
+.submit-n-counter {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
