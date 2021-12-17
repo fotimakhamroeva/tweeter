@@ -54,6 +54,18 @@ const clearNewForm = function() {
     $("#tweet-text").val("");
 }
 
+const counterOnChange = function() {
+    const tweetText = $("#tweet-text").val();
+    //console.log(tweetText.length);
+    const remainLength = 140 - tweetText.length;
+    $("#counter").val(remainLength);
+    if (remainLength < 0) {
+        $("#counter").addClass("counterError");
+    } else {
+        $("#counter").removeClass("counterError");
+    }
+}
+
 const postNewTweet = function(e) {
     e.preventDefault(); 
     hideError();
@@ -86,6 +98,7 @@ const postNewTweet = function(e) {
 
 $(document).ready(function(){
     $("#newTweetForm").submit(postNewTweet);
+    $("#tweet-text").on('input', counterOnChange);
     hideError();
     loadTweets();
 });

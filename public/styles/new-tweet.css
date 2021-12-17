@@ -34,3 +34,7 @@
     flex-direction: row;
     justify-content: space-between;
 }
+
+.counterError {
+    color: red;
+}
