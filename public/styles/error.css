@@ -1,0 +1,24 @@
+#errorContainer {
+    width: 100%;
+    margin-top: 30px;
+    /*color: #FFFFFF;
+    padding-left: 1.5em;
+    padding-right: 1.5em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    z-index: 1; */
+}
+
+.error {
+    width: 100%;
+    border: solid red;
+    border-width: 3px;
+    padding: 10px;
+}
+
+.error > .fas {
+    color: red;
+}

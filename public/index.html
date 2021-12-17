@@ -26,6 +26,9 @@
     <!-- Tweet CSS -->
     <link rel="stylesheet" href="/styles/tweet.css" type="text/css" />
 
+    <!-- Error CSS -->
+    <link rel="stylesheet" href="/styles/error.css" type="text/css" />
+
     <!-- External JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
@@ -60,9 +63,16 @@
 
     <!-- Page-specific (main) content here -->
     <main class="container">
+      <section id="errorContainer">
+        <div class="error">
+          <em class="fas fa-exclamation-triangle"></em>
+          <span id="errorMsg">Test error</span>
+          <em class="fas fa-exclamation-triangle"></em>
+        </div>
+      </section>
       <section class="new-tweet">
         <h2>Compose Tweet</h2>
-        <form method="post" action="/tweets">
+        <form id="newTweetForm" method="post" action="/tweets">
           <textarea name="text" id="tweet-text" placeholder="What are you humming about?"></textarea>
           <div class="submit-n-counter">
             <button type="submit">Tweet</button>

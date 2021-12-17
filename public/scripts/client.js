@@ -1,32 +1,6 @@
-// Fake data taken from initial-tweets.json
-const data = [
-    {
-      "user": {
-        "name": "Newton",
-        "avatars": "https://i.imgur.com/73hZDYK.png"
-        ,
-        "handle": "@SirIsaac"
-      },
-      "content": {
-        "text": "If I have seen further it is by standing on the shoulders of giants"
-      },
-      "created_at": 1461116232227
-    },
-    {
-      "user": {
-        "name": "Descartes",
-        "avatars": "https://i.imgur.com/nlhLi3I.png",
-        "handle": "@rd" },
-      "content": {
-        "text": "Je pense , donc je suis"
-      },
-      "created_at": 1461113959088
-    }
-  ]
-
 const renderTweets = function(tweets) {
   for (const tweet of tweets) {
-    $('#tweets').append(createTweetElement(tweet));
+    $('#tweets').prepend(createTweetElement(tweet));
   }
 }
 
@@ -51,6 +25,67 @@ const createTweetElement = function(tweet) {
                 </article>`
 }
 
+const loadTweets = function() {
+    $.ajax({
+        type: "GET",
+        url: '/tweets', 
+        success: function (resultJson) {
+            //console.log('Success: ', resultJson);
+            renderTweets(resultJson);
+        },
+        error: function (xhr, status, errData) {
+            showError(eval("(" + xhr.responseText + ")").error);
+        }
+    });
+}
+
+const showError = function(error) {
+    //alert(error);
+    //console.log(error);
+    $("#errorMsg").html(error);
+    $(".error").show();
+}
+
+const hideError = function() {
+    $(".error").hide();
+}
+
+const clearNewForm = function() {
+    $("#tweet-text").val("");
+}
+
+const postNewTweet = function(e) {
+    e.preventDefault(); 
+    hideError();
+    var form = $(this);
+    var url = form.attr('action');
+    const tweetText = $("#tweet-text").val();
+    //console.log(tweetText);
+    if (!tweetText) {
+        showError("Please input a tweet text.")
+        return;
+    }
+    if (tweetText.length > 140) {
+        showError("Your tweet text must be less than 140 characters.")
+        return;
+    }
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: form.serialize(), 
+        success: function(data) {
+            //alert(data); 
+            loadTweets();
+            clearNewForm()
+        },
+        error: function (xhr, status, errData) {
+            showError(eval("(" + xhr.responseText + ")").error);
+        }
+    }); 
+}
+
 $(document).ready(function(){
-    renderTweets(data);
+    $("#newTweetForm").submit(postNewTweet);
+    hideError();
+    loadTweets();
 });
