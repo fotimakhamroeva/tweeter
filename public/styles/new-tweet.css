@@ -15,6 +15,25 @@
     width: 100%;
 }
 
+.new-tweet button {
+    background-color: #536ab6; 
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+.new-tweet button:hover {
+    background-color: #384f99; 
+}
+
+.new-tweet button:active {
+    background-color: #1d3274; 
+}
+
 .new-tweet textarea {
     background-color: transparent;
     border-top: transparent;
@@ -26,6 +45,7 @@
 
 #tweet-text {
     width: 100%;
+    border-bottom: solid 3px black;
 }
 
 .submit-n-counter {

@@ -1,30 +1,20 @@
 .tweets {
     width: 100%;
-    /*color: #FFFFFF;
-    padding-left: 1.5em;
-    padding-right: 1.5em;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    position: absolute;
-    z-index: 1; */
 }
 
 .tweet {
     width: 100%;
     border: solid black;
     border-width: 3px;
-    margin-top: 15px;
-    /*color: #FFFFFF;
-    padding-left: 1.5em;
-    padding-right: 1.5em;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    position: absolute;
-    z-index: 1; */
+    margin-top: 20px;
+}
+
+.tweet:last-child {
+    margin-bottom: 20px;
+}
+
+.tweet:first-child {
+    margin-top: 40px;
 }
 
 .row {
@@ -46,4 +36,8 @@
 
 .tweet footer {
     border-top: solid black;
+}
+
+.tweet:hover {
+    box-shadow: 10px 10px 5px #4057a15d;
 }
