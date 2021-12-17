@@ -1,28 +1,31 @@
-const renderTweets = function(tweets) {
-  for (const tweet of tweets) {
-    $('#tweets').prepend(createTweetElement(tweet));
-  }
-}
-
-const createTweetElement = function(tweet) {
-    return  `<article class="tweet">
-                <section>
-                    <div class="row">
-                    <img src='${ tweet.user.avatars }'>
-                    <h4>${ tweet.user.name }</h4>
-                    </div>
-                    <h4>${ tweet.user.handle }</h4>
-                </section>
-                <section>
-                    ${ tweet.content.text }
-                </section>
-                <footer>
-                    <section>
-                    <div>${ tweet.created_at }</div>
-                    <div><img><img><img></div>
-                    </section>
-                </footer>
-                </article>`
+const postNewTweet = function(e) {
+    e.preventDefault(); 
+    hideError();
+    var form = $(this);
+    var url = form.attr('action');
+    const tweetText = $("#tweet-text").val();
+    //console.log(tweetText);
+    if (!tweetText) {
+        showError("Please input a tweet text.")
+        return;
+    }
+    if (tweetText.length > 140) {
+        showError("Your tweet text must be less than 140 characters.")
+        return;
+    }
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: form.serialize(), 
+        success: function(data) {
+            //alert(data); 
+            loadTweets();
+            clearNewForm()
+        },
+        error: function (xhr, status, errData) {
+            showError(eval("(" + xhr.responseText + ")").error);
+        }
+    }); 
 }
 
 const loadTweets = function() {
@@ -38,6 +41,39 @@ const loadTweets = function() {
         }
     });
 }
+
+const renderTweets = function(tweets) {
+    for (const tweet of tweets) {
+      $('#tweets').prepend(createTweetElement(tweet));
+    }
+  }
+  
+  const createTweetElement = function(tweet) {
+      return  `<article class="tweet">
+                  <section>
+                      <div class="row">
+                        <img src='${ tweet.user.avatars }'>
+                        <h4>${ tweet.user.name }</h4>
+                      </div>
+                      <div class="row">
+                        <h4>${ tweet.user.handle }</h4>
+                      </div>
+                  </section>
+                  <section>
+                      ${ tweet.content.text }
+                  </section>
+                  <footer>
+                      <section>
+                      <div>${ timeSince(new Date(tweet.created_at)) }</div>
+                      <div>
+                          <i class="fas fa-flag"></i>
+                          <i class="fas fa-retweet"></i>
+                          <i class="fas fa-heart"></i>
+                      </div>
+                      </section>
+                  </footer>
+                  </article>`
+  }
 
 const showError = function(error) {
     //alert(error);
@@ -68,34 +104,24 @@ const counterOnChange = function() {
     }
 }
 
-const postNewTweet = function(e) {
-    e.preventDefault(); 
-    hideError();
-    var form = $(this);
-    var url = form.attr('action');
-    const tweetText = $("#tweet-text").val();
-    //console.log(tweetText);
-    if (!tweetText) {
-        showError("Please input a tweet text.")
-        return;
+const timeSince = function(timeStamp) {
+    var now = new Date(),
+      secondsPast = (now.getTime() - timeStamp) / 1000;
+    if (secondsPast < 60) {
+      return parseInt(secondsPast) + 's';
     }
-    if (tweetText.length > 140) {
-        showError("Your tweet text must be less than 140 characters.")
-        return;
+    if (secondsPast < 3600) {
+      return parseInt(secondsPast / 60) + 'm';
     }
-    $.ajax({
-        type: "POST",
-        url: url,
-        data: form.serialize(), 
-        success: function(data) {
-            //alert(data); 
-            loadTweets();
-            clearNewForm()
-        },
-        error: function (xhr, status, errData) {
-            showError(eval("(" + xhr.responseText + ")").error);
-        }
-    }); 
+    if (secondsPast <= 86400) {
+      return parseInt(secondsPast / 3600) + 'h';
+    }
+    if (secondsPast > 86400) {
+      day = timeStamp.getDate();
+      month = timeStamp.toDateString().match(/ [a-zA-Z]*/)[0].replace(" ", "");
+      year = timeStamp.getFullYear() == now.getFullYear() ? "" : " " + timeStamp.getFullYear();
+      return day + " " + month + year;
+    }
 }
 
 $(document).ready(function(){

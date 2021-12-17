@@ -20,6 +20,7 @@
 .row {
     display: flex;
     flex-direction: row;
+    align-items: center;
 }
 
 .tweet img {
@@ -27,8 +28,13 @@
     height: 50px;
 }
 
+.tweet h4 {
+    margin: 0px;
+}
+
 .tweet section {
     width: 100%;
+    padding: 10px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -40,4 +46,13 @@
 
 .tweet:hover {
     box-shadow: 10px 10px 5px #4057a15d;
+}
+
+.fas {
+    color: #536ab6;
+    font-size: 12pt;
+}
+
+.fas:hover {
+    color: #d59423;
 }
