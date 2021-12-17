@@ -9,8 +9,9 @@ nav {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    position: absolute;
     z-index: 1;
+    position: fixed; 
+    top: 0;
 }
 
 nav span {
