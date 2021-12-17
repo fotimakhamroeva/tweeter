@@ -52,6 +52,8 @@ const hideError = function() {
 
 const clearNewForm = function() {
     $("#tweet-text").val("");
+    $("#counter").val(140);
+    $("#counter").removeClass("counterError");
 }
 
 const counterOnChange = function() {
