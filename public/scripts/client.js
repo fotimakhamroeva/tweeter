@@ -43,8 +43,9 @@ const loadTweets = function() {
 }
 
 const renderTweets = function(tweets) {
+    $('#tweets').empty()
     for (const tweet of tweets) {
-      $('#tweets').prepend(createTweetElement(tweet));
+        $('#tweets').prepend(createTweetElement(tweet));
     }
   }
   
