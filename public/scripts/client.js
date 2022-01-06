@@ -1,10 +1,10 @@
+// posts a new tweet and handles error scenarios
 const postNewTweet = function(e) {
     e.preventDefault(); 
     hideError();
     var form = $(this);
     var url = form.attr('action');
     const tweetText = $("#tweet-text").val();
-    //console.log(tweetText);
     if (!tweetText) {
         showError("Please input a tweet text.")
         return;
@@ -13,6 +13,7 @@ const postNewTweet = function(e) {
         showError("Your tweet text must be less than 140 characters.")
         return;
     }
+    // post the tweet and reload
     $.ajax({
         type: "POST",
         url: url,
@@ -28,12 +29,12 @@ const postNewTweet = function(e) {
     }); 
 }
 
+// loads all the tweets and renders them
 const loadTweets = function() {
     $.ajax({
         type: "GET",
         url: '/tweets', 
         success: function (resultJson) {
-            //console.log('Success: ', resultJson);
             renderTweets(resultJson);
         },
         error: function (xhr, status, errData) {
@@ -42,6 +43,7 @@ const loadTweets = function() {
     });
 }
 
+// renders tweets to the ui
 const renderTweets = function(tweets) {
     $('#tweets').empty()
     for (const tweet of tweets) {
@@ -49,8 +51,9 @@ const renderTweets = function(tweets) {
     }
   }
   
-  const createTweetElement = function(tweet) {
-      return  `<article class="tweet">
+// creates a tweet html element
+const createTweetElement = function(tweet) {
+    return  `<article class="tweet">
                   <section>
                       <div class="row">
                         <img src='${ tweet.user.avatars }'>
@@ -76,26 +79,27 @@ const renderTweets = function(tweets) {
                   </article>`
   }
 
+// will display the error message on the ui
 const showError = function(error) {
-    //alert(error);
-    //console.log(error);
     $("#errorMsg").html(error);
     $(".error").show();
 }
 
+// will hide the error message on the ui
 const hideError = function() {
     $(".error").hide();
 }
 
+// clears the tweet form
 const clearNewForm = function() {
     $("#tweet-text").val("");
     $("#counter").val(140);
     $("#counter").removeClass("counterError");
 }
 
+// updates the tweet counter
 const counterOnChange = function() {
     const tweetText = $("#tweet-text").val();
-    //console.log(tweetText.length);
     const remainLength = 140 - tweetText.length;
     $("#counter").val(remainLength);
     if (remainLength < 0) {
@@ -105,6 +109,7 @@ const counterOnChange = function() {
     }
 }
 
+// returns a timestamp using time-since format
 const timeSince = function(timeStamp) {
     var now = new Date(),
       secondsPast = (now.getTime() - timeStamp) / 1000;
@@ -125,6 +130,7 @@ const timeSince = function(timeStamp) {
     }
 }
 
+// when document is ready, load the tweets and prepare ui
 $(document).ready(function(){
     $("#newTweetForm").submit(postNewTweet);
     $("#tweet-text").on('input', counterOnChange);
